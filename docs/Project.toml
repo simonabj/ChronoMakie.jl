@@ -1,0 +1,3 @@
+[deps]
+ChronoMakie = "11c6a742-337b-4f20-ab27-6a3fffcce212"
+Documenter = "e30172f5-a6a5-5a46-863b-614d45cd2de4"
