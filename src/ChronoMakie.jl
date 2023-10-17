@@ -3,6 +3,7 @@ module ChronoMakie
 using Makie, Dates
 
 export DateAxis, TimeAxis, DateTimeAxis
+export date2float, time2float, datetime2float
 
 # Write your package code here.
 function DateAxis(args; dateformat = "dd-mm-yyyy" , kwargs...)
@@ -29,8 +30,12 @@ function DateTimeAxis(args; datetimeformat = "dd-mm-yyyy HH:MM:SS", kwargs...)
     return Axis(args; xtickformat = x_fmt, kwargs...)
 end
 
-Makie.convert_arguments(P::PointBased, x::AbstractArray{Date}, y) = convert_arguments(P, map(e->e.instant.periods.value,x), y)
-Makie.convert_arguments(P::PointBased, x::AbstractArray{Time}, y) = convert_arguments(P, map(e->e.instant.value, x), y)
-Makie.convert_arguments(P::PointBased, x::AbstractArray{DateTime}, y) = convert_arguments(P, map(e->e.instant.periods.value-62135683200000, x), y)
+date2float(date::Date) = date.instant.periods.value
+time2float(time::Time) = time.instant.value
+datetime2float(datetime::DateTime) = datetime.instant.periods.value-62135683200000
+
+Makie.convert_arguments(P::PointBased, x::AbstractArray{Date}, y) = convert_arguments(P, map(date2float,x), y)
+Makie.convert_arguments(P::PointBased, x::AbstractArray{Time}, y) = convert_arguments(P, map(time2float, x), y)
+Makie.convert_arguments(P::PointBased, x::AbstractArray{DateTime}, y) = convert_arguments(P, map(datetime2float, x), y)
 
 end
