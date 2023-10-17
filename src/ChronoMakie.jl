@@ -1,5 +1,7 @@
 module ChronoMakie
 
+using Makie, Dates
+
 export DateAxis, TimeAxis, DateTimeAxis
 
 # Write your package code here.
